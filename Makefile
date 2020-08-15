@@ -7,7 +7,6 @@
 # Compiler options
 OPTS=-g
 OPTS=-O0
-#OPTS=-O2
 
 UNAME = $(shell uname)
 
@@ -43,7 +42,7 @@ endif
 
 #######################################
 
-CPPFLAGS += -I./src -I./include
+CPPFLAGS += -I./src -I./include -D FREEGLUT_STATIC
 
 LIBGLUI = -L./lib -lglui
 
