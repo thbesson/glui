@@ -12,11 +12,11 @@ UNAME = $(shell uname)
 
 CPPFLAGS+=-std=c++11
 
-ifeq ($(UNAME), Linux)
+#ifeq ($(UNAME), Linux)
 CXX      ?= g++
 CPPFLAGS += $(OPTS) -Wall -pedantic
-LIBGL     = -lGLU -lGL
-LIBS      = -lXmu -lXext -lX11 -lXi -lm
+LIBGL     = 
+LIBS      = -lm
 
 # One of the following options only...
 
@@ -29,9 +29,9 @@ LIBS      = -lXmu -lXext -lX11 -lXi -lm
 # CPPFLAGS += -I/usr/X11R6/include -DGLUI_FREEGLUT
 
 # (3) GLUT
-LIBGLUT   = -L/usr/X11R6/lib -lglut
+LIBGLUT   = -L/usr/X11R6/lib -lfreeglut_static
 CPPFLAGS += -I/usr/X11R6/include
-endif
+#endif
 
 ifeq ($(UNAME), Darwin)
 CXX      ?= g++
