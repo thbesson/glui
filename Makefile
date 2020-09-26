@@ -1,9 +1,5 @@
 .SUFFIXES: .cpp
 
-#for sgi   -- comment out the lines below to use on HP
-#CC=CC -g0 -o32
-#CC=gcc
-
 # Compiler options
 OPTS=-g
 OPTS=-O0
@@ -12,26 +8,21 @@ UNAME = $(shell uname)
 
 CPPFLAGS+=-std=c++11
 
-#ifeq ($(UNAME), Linux)
+ifeq ($(UNAME), Linux)
 CXX      ?= g++
 CPPFLAGS += $(OPTS) -Wall -pedantic
-LIBGL     = 
+LIBGL     = -lGLU -lGL
 LIBS      = -lm
+LIBGLUT   = -lfreeglut_static
+endif
 
-# One of the following options only...
-
-# (1) OpenGLUT
-# LIBGLUT   = -L/usr/X11R6/lib -lopenglut
-# CPPFLAGS += -I/usr/X11R6/include -DGLUI_OPENGLUT
-
-# (2) FreeGLUT
-# LIBGLUT   = -L/usr/X11R6/lib -lfreeglut
-# CPPFLAGS += -I/usr/X11R6/include -DGLUI_FREEGLUT
-
-# (3) GLUT
-LIBGLUT   = -L/usr/X11R6/lib -lfreeglut_static
-CPPFLAGS += -I/usr/X11R6/include
-#endif
+ifeq ($(findstring MINGW64_NT,$(UNAME)),MINGW64_NT)
+CXX		?= g++
+CPPFLAGS += $(OPTS) -Wall -pedantic
+LIBGL     = -lglu32 -lopengl32 -lgdi32
+LIBS      = -lm -lwinmm -Wl,--subsystem,windows -static -lstdc++ -lwinpthread -static-libgcc -static-libstdc++
+LIBGLUT   = -lfreeglut_static
+endif
 
 ifeq ($(UNAME), Darwin)
 CXX      ?= g++
